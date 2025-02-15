@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AboutPage extends StatelessWidget {
   AboutPage();
 
@@ -10,10 +11,10 @@ class AboutPage extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('About'),
+        title: Text(AppLocalizations.of(context)!.about),
       ),
       body: Center(
-        child: Text('It\'s About Page'),
+        child: Text(AppLocalizations.of(context)!.about),
       ),
     );
   }

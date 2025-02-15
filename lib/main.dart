@@ -7,9 +7,13 @@ import 'pages/help.dart';
 import 'pages/totp.dart';
 import 'pages/token_gen.dart';
 import 'pages/hash.dart';
-
-
-
+import 'pages/calculator.dart';
+import 'pages/screen_check.dart';
+import 'pages/qr.dart';
+import 'pages/base64.dart';
+import 'pages/bcrypt.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +36,16 @@ class MyApp extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'),
+        Locale('zh'),
+      ],
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: themeProvider.themeMode,
@@ -99,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('blahval', style: TextStyle(fontSize: 20)),
+        title: Text("blahval", style: const TextStyle(fontSize: 20)),
         leading: IconButton(
           icon: const Icon(Icons.menu, size: 28),
           onPressed: () => _scaffoldKey.currentState?.openDrawer(),
@@ -110,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _currentIndex,
         children: _pages,
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
+      bottomNavigationBar: _buildBottomNavBar(context),
     );
   }
 
@@ -120,24 +134,24 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blueAccent),
-            child: Text('Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24)),
+          DrawerHeader(
+            decoration: const BoxDecoration(color: Colors.blueAccent),
+            child: Text(AppLocalizations.of(context)!.menu,
+                style: const TextStyle(color: Colors.white, fontSize: 24)),
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('Setting'),
+            title: Text(AppLocalizations.of(context)!.setting),
             onTap: () => _handleMenuTap(0),
           ),
           ListTile(
             leading: const Icon(Icons.help),
-            title: const Text('Help'),
+            title: Text(AppLocalizations.of(context)!.help),
             onTap: () => _handleMenuTap(1),
           ),
           ListTile(
             leading: const Icon(Icons.info),
-            title: const Text('About'),
+            title: Text(AppLocalizations.of(context)!.about),
             onTap: () => _handleMenuTap(2),
           ),
         ],
@@ -145,19 +159,19 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBottomNavBar() {
+  Widget _buildBottomNavBar(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
       selectedItemColor: Colors.blue[700],
       unselectedItemColor: Colors.grey[600],
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Main',
+          icon: const Icon(Icons.home),
+          label: AppLocalizations.of(context)!.main,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'My',
+          icon: const Icon(Icons.person),
+          label: AppLocalizations.of(context)!.my,
         ),
       ],
       onTap: (index) => setState(() => _currentIndex = index),
@@ -211,28 +225,65 @@ class SubMenu {
 }
 
 class HomePage extends StatelessWidget {
-  final List<MainMenu> menus = [
-    MainMenu(
-      title: 'Tools',
-      icon: Icons.build,
-      subMenus: [
-        SubMenu(
-          title: 'totp',
-          page: TOTPPage(),
-        ),
-        SubMenu(
-          title: 'token gen',
-          page: TokenGenPage(),
-        ),
-        SubMenu(
-          title: 'hash',
-          page: HashPage(),
-        ),
-      ],
-    ),
-  ];
+  List<MainMenu> _buildMenus(BuildContext context) {
+    return [
+      MainMenu(
+        title: AppLocalizations.of(context)!.auth,
+        icon: Icons.lock,
+        subMenus: [
+          SubMenu(
+            title: 'totp',
+            page: TOTPPage(),
+          ),
+        ]
+      ),
+      MainMenu(
+        title: AppLocalizations.of(context)!.tools,
+        icon: Icons.build,
+        subMenus: [
+          SubMenu(
+            title: 'qr',
+            page: QRPage(),
+          ),
+          SubMenu(
+            title: 'calculator',
+            page: CalculatorPage(),
+          ),
+          SubMenu(
+            title: 'screen check',
+            page: ScreenCheckPage(),
+          ),
+          
+          SubMenu(
+            title: 'token gen',
+            page: TokenGenPage(),
+          ),
+        ]
+      ),
+      MainMenu(
+        title: AppLocalizations.of(context)!.convert,
+        icon: Icons.loop,
+        subMenus: [
+          SubMenu(
+            title: 'hash',
+            page: HashPage(),
+          ),
+          SubMenu(
+            title: 'base64',
+            page: Base64Page(),
+          ),
+          SubMenu(
+            title: 'bcrypt',
+            page: BcryptPage(),
+          ),
+        ]
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+    final menus = _buildMenus(context);
     return Scaffold(
       body: ListView.builder(
         itemCount: menus.length,
@@ -295,6 +346,6 @@ class HomePage extends StatelessWidget {
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('My'));
+    return Center(child: Text(AppLocalizations.of(context)!.my));
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
 
+
 class TokenGenPage extends StatefulWidget {
   @override
   // ignore: library_private_types_in_public_api
@@ -59,7 +60,7 @@ class _TokenGenPageState extends State<TokenGenPage> {
   void _copyToClipboard() {
     Clipboard.setData(ClipboardData(text: _tokenController.text));
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Already Copyed'))
+      SnackBar(content: Text('Copyed'))
     );
   }
 

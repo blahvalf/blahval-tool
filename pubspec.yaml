@@ -18,6 +18,15 @@ dependencies:
   css_colors: ^1.1.6
   crypto: ^3.0.3
   pointycastle: ^3.6.2
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  qr_flutter: ^4.0.0
+  gallery_saver: ^2.3.2
+  path_provider: ^2.0.11
+  fluttertoast: ^8.0.9
+  clipboard: ^0.1.3
+  bcrypt: ^1.1.3
   
 dev_dependencies:
   flutter_test:
@@ -27,3 +36,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
