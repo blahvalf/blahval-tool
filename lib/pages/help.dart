@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HelpPage extends StatelessWidget {
   HelpPage();
 
@@ -10,10 +11,10 @@ class HelpPage extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Help'),
+        title: Text(AppLocalizations.of(context)!.help),
       ),
       body: Center(
-        child: Text('It\'s Help Page'),
+        child: Text(AppLocalizations.of(context)!.help),
       ),
     );
   }

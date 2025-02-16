@@ -76,7 +76,7 @@ String _bytesToHex(List<int> bytes) {
   void _copyToClipboard(String text) {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Already Copyed')),
+      SnackBar(content: Text('Copyed')),
     );
   }
 
